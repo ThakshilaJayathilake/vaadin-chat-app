@@ -16,6 +16,8 @@
 	<properties>
 		<java.version>17</java.version>
 		<vaadin.version>24.4.2</vaadin.version>
+		<node.version>22.3.0</node.version>
+		<node.executable>D:\nodejs\node.exe</node.executable>
 	</properties>
 	<repositories>
 		<repository>
@@ -120,6 +122,11 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<nodeVersion>22.3.0</nodeVersion>
+					<nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+					<nodeExecutable>D:\nodejs\node.exe</nodeExecutable>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
