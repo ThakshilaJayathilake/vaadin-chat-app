@@ -1,5 +1,7 @@
 package org.example.demovaadin.UI;
 
+import com.vaadin.collaborationengine.CollaborationBinder;
+import com.vaadin.collaborationengine.UserInfo;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -13,6 +15,8 @@ import jakarta.annotation.security.RolesAllowed;
 import org.example.demovaadin.backend.Book;
 import com.vaadin.flow.data.binder.Binder;
 import org.example.demovaadin.backend.BookService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Route("new")
 @RolesAllowed("ADMIN")
@@ -26,8 +30,13 @@ public class NewView extends VerticalLayout {
 
     public NewView(BookService service){
 
-        var binder = new Binder<>(Book.class);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        var userInfo = new UserInfo(username, username);
+        var binder = new CollaborationBinder<>(Book.class, userInfo);
         binder.bindInstanceFields(this);
+        binder.setTopic("new-book", () -> new Book());
+
         add(
                 new H1("New Book"),
                 new FormLayout(title, published, rating),
@@ -36,7 +45,7 @@ public class NewView extends VerticalLayout {
                     binder.writeBeanIfValid(book);
                     service.add(book);
                     Notification.show("Book saved");
-                    binder.readBean(new Book());
+                    binder.reset(new Book());
                 })
         );
     }
