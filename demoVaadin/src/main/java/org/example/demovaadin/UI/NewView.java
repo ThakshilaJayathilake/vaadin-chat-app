@@ -1,7 +1,6 @@
 package org.example.demovaadin.UI;
 
-import com.vaadin.collaborationengine.CollaborationBinder;
-import com.vaadin.collaborationengine.UserInfo;
+import com.vaadin.collaborationengine.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -38,6 +37,8 @@ public class NewView extends VerticalLayout {
         binder.bindInstanceFields(this);
         binder.setTopic("new-book", () -> new Book());
 
+        var messageList = new CollaborationMessageList(userInfo, "new_book");
+
         add(
                 new H1("New Book"),
 
@@ -53,7 +54,8 @@ public class NewView extends VerticalLayout {
                                 })
                         ),
                         new VerticalLayout(
-
+                            messageList,
+                            new CollaborationMessageInput(messageList)
                         )
                 )
 
