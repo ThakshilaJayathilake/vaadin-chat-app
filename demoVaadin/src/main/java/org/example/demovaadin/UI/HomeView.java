@@ -1,5 +1,6 @@
 package org.example.demovaadin.UI;
 
+import com.vaadin.flow.component.cookieconsent.CookieConsent;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -15,7 +16,8 @@ public class HomeView extends VerticalLayout {
     public HomeView(){
 //        adds an H1 (header) component to the layout
         add(
-                new H1("Home view")
+                new H1("Home view"),
+                new CookieConsent()
         );
     }
 }
