@@ -7,6 +7,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -39,14 +40,24 @@ public class NewView extends VerticalLayout {
 
         add(
                 new H1("New Book"),
-                new FormLayout(title, published, rating),
-                new Button("Save", event -> {
-                    var book = new Book();
-                    binder.writeBeanIfValid(book);
-                    service.add(book);
-                    Notification.show("Book saved");
-                    binder.reset(new Book());
-                })
+
+                new HorizontalLayout(
+                        new VerticalLayout(
+                                new FormLayout(title, published, rating),
+                                new Button("Save", event -> {
+                                    var book = new Book();
+                                    binder.writeBeanIfValid(book);
+                                    service.add(book);
+                                    Notification.show("Book saved");
+                                    binder.reset(new Book());
+                                })
+                        ),
+                        new VerticalLayout(
+
+                        )
+                )
+
+
         );
     }
 }
